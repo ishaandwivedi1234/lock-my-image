@@ -1,0 +1,163 @@
+{% include 'base.html' %} {% block body %}
+<div>  
+   <div class="row">
+    <div class="col-lg-5">
+      {% if lock %}
+      <div class="lock">
+      <div class="title">Lock My Images</div>
+      <div>
+        <span class="locked__head">
+          Wohoo! Your image is encypted
+        </span>
+      </div>
+      <div class="intro">{{intro}}</div>
+      
+      <div class="btns">
+        <div href="" class="btn-lock">
+          {% load static %}
+          <a href="{% static 'encrypted.jpg' %}" download
+            >Dowload Locked Image</a
+          >
+        </div>
+        <div class="btn-unlock">
+          <a href=""  data-mdb-toggle="modal" data-mdb-target="#unlockModel">Unlock Image</a>
+        </div>
+      </div>
+    </div>
+      {% elif unlock %}
+      <div class="unlock">
+      <div class="title">Lock My Images</div>
+      <div>
+        <span class="locked__head">
+          Your image is unlocked 
+        </span>
+      </div>
+      <div class="intro">{{intro}}</div>
+      <div class="btns">
+        <div href="" class="btn-lock">
+          {% load static %}
+          <a href="{% static 'decrypted.jpg' %}"  download
+            >Download Image</a
+          >
+        </div>
+        <div class="btn-unlock">
+          <a href=""  data-mdb-toggle="modal" data-mdb-target="#unlockModel">Unlock Agiain</a>
+        </div>
+      </div>
+    </div>
+
+      {% else %}
+      <div class="home">
+      <div class="title">Lock My Images</div>
+      <div class="intro">{{intro}}</div>
+      <div class="btns">
+        <div href="" class="btn-lock">
+          <a href="" data-mdb-toggle="modal" data-mdb-target="#lockModel"
+            >Lock Image</a
+          >
+        </div>
+        <div class="btn-unlock">
+          <a href=""  data-mdb-toggle="modal" data-mdb-target="#unlockModel">Unlock Image</a>
+        </div>
+      </div>
+    </div>
+{% endif %}
+    </div>
+
+    <div class="col-lg-7 right__head"></div>
+  </div>
+
+  
+  <div
+    class="modal fade"
+    id="lockModel"
+    tabindex="-1"
+    aria-labelledby="ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Set Locking Parameters
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-mdb-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+       
+        <form method="post" action="/lock" enctype="multipart/form-data">
+           {% csrf_token %}
+          <div class="modal-body">
+            <label for="myfile">Select an image:</label>
+            <input type="file" id="imgfile" name="imgfile" />
+            <br />
+            <br />
+            <label for="fname">Master Key :</label>
+            <input type="text" id="mkey" name="masterKey" /><br /><br />
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-mdb-dismiss="modal">
+            Close
+          </button>
+          <button type="submit"  class="btn btn-primary">
+            Save
+          </button>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="unlockModel"
+    tabindex="-1"
+    aria-labelledby="ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Unlock
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-mdb-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+       
+        <form method="post" action="/unlock" enctype="multipart/form-data">
+           {% csrf_token %}
+          <div class="modal-body">
+            <label for="myfile">Select an image:</label>
+            <input type="file" id="imgfile" name="imgfile" />
+            <br />
+            <br />
+            <label for="fname">Master Key :</label>
+            <input type="text" id="mkey" name="masterKey" /><br /><br />
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-mdb-dismiss="modal">
+            Close
+          </button>
+          <button type="submit"  class="btn btn-primary">
+           Save
+          </button>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  {% endblock body %}
+</div>
